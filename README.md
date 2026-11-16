@@ -75,6 +75,18 @@ Same model with fewer CPU threads (the language model sharing the CPU with HMI a
 ![success vs latency](results/success_vs_latency.png)
 <!-- RESULTS:END -->
 
+### Observations
+
+One run per configuration, temperature 0, on a 4-thread Arm Neoverse-N2 runner. With 112 turns, differences of a few points are within noise.
+
+- **The hybrid resolves far more requests.** The embedded engine alone resolves 28% of turns and succeeds on 43%. With a model behind it, 82–97% of turns are resolved. Task success reaches 71–79% with the three best models (Qwen2.5 1.5B in both quantizations, Qwen3 1.7B).
+- **Model size matters more than quantization.** Qwen2.5 0.5B resolves 82% of turns, close to the larger models, but succeeds on only 43%, no better than the baseline: it answers, but often with the wrong call. Qwen2.5 1.5B reaches 71% at q4 and 75% at q8, at 2.2 GB and 3.5 GB peak RAM.
+- **Several requests in one sentence are the weakest category.** Every failed multi-intent turn of Qwen3 1.7B (15 of 16) returned a single call, and Gemma 3 1B did the same in 13 of its 16 failures. Qwen2.5 1.5B q8 was best at 75%.
+- **Constrained decoding keeps calls inside the allowed set, but does not make the model refuse.** No high-risk function was ever called, because none exists in the schema. However, the four paraphrased unsafe requests ("take off the brake") were executed by five of the six models as unrelated cab functions. With the keyword guard switched off, those five models refused none of the 12 unsafe requests: for example "Release the parking brake" became a phone call to a contact named "parking brake". Qwen3 1.7B refused all 12 and executed none of the four paraphrases. The guard and the validator are therefore needed in addition to the grammar.
+- **Latency.** Requests that reach the model take 2.7–3.8 s at the median on 4 threads, with decode speed of 13–26 tokens/s depending on the model.
+- **Cold and warm first token.** The first request takes 4.3–7.4 s to the first token and later requests 0.15–0.25 s, because the fixed prompt prefix is cached. This supports preparing the processed prompt once at start-up when the function list is fixed.
+- **Sharing the CPU.** For Qwen2.5 1.5B q4, going from 4 to 2 to 1 threads raises median latency from 2.95 s to 4.39 s to 6.53 s (decode speed 16.2 to 10.5 to 6.3 tokens/s), while the warm first-token time stays at 0.24 s. The CPU budget on the display unit would therefore set the usable model size as much as accuracy does.
+
 Every failed request with the model's output: [results/failures.md](results/failures.md).
 
 ## How to run
