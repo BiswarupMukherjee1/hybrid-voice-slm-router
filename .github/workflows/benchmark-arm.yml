@@ -1,0 +1,67 @@
+name: ARM CPU benchmark
+
+# Runs the full benchmark on GitHub's Arm64 Linux runner (free for public repositories)
+# and commits the results table back into README.md. Start it from the Actions tab.
+on:
+  workflow_dispatch:
+    inputs:
+      models:
+        description: "Comma-separated model names from models.yaml (empty = all)"
+        default: ""
+      limit:
+        description: "Only the first N cases (empty = all), for a quick check"
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install (llama.cpp compiled for this Arm CPU)
+        run: |
+          pip install -r requirements.txt
+          CMAKE_ARGS="-DGGML_NATIVE=ON" pip install llama-cpp-python==0.3.37
+
+      - name: Unit tests
+        run: python -m pytest -q
+
+      - name: Cache models
+        uses: actions/cache@v4
+        with:
+          path: models
+          key: gguf-${{ hashFiles('models.yaml') }}
+
+      - name: Benchmark
+        env:
+          INPUT_MODELS: ${{ inputs.models }}
+          INPUT_LIMIT: ${{ inputs.limit }}
+        run: |
+          LIMIT=""
+          if [ -n "$INPUT_LIMIT" ]; then LIMIT="--limit $INPUT_LIMIT"; fi
+          python bench/run_all.py --models "$INPUT_MODELS" $LIMIT \
+            --device-label "GitHub Actions ubuntu-24.04-arm"
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-arm
+          path: results/
+
+      - name: Commit results
+        run: |
+          cat results/summary.md >> "$GITHUB_STEP_SUMMARY"
+          git config user.name "Biswarup Mukherjee"
+          git config user.email "89087014+BiswarupMukherjee1@users.noreply.github.com"
+          git add results README.md
+          git commit -m "ARM benchmark results" || echo "nothing to commit"
+          git push
