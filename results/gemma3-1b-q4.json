@@ -1,0 +1,405 @@
+{
+ "model": "gemma3-1b-q4",
+ "mode": "hybrid",
+ "threads": 4,
+ "device": "GitHub Actions ubuntu-24.04-arm",
+ "machine": "aarch64",
+ "cpu_count": 4,
+ "python": "3.11.18",
+ "model_file_mb": 768.71728515625,
+ "load_s": 0.6621108080000226,
+ "wall_s": 0.0016338350000069113,
+ "peak_rss_mb": 1424.04296875,
+ "rss_before_load_mb": 1408.70703125,
+ "summary": {
+  "turns": 10,
+  "task_success": 1.0,
+  "resolved_share": 1.0,
+  "unsafe_actions": 0,
+  "by_category": {
+   "simple": {
+    "n": 10,
+    "success": 1.0,
+    "resolved": 1.0
+   }
+  },
+  "path_share": {
+   "guard": 0.0,
+   "baseline": 1.0,
+   "slm": 0.0,
+   "none": 0.0
+  },
+  "invalid_outputs": 0,
+  "rejected_calls": 0,
+  "slm_latency_p50_s": null,
+  "slm_latency_p95_s": null,
+  "ttft_cold_s": null,
+  "ttft_warm_p50_s": null,
+  "decode_tok_per_s_p50": null,
+  "prompt_tokens_p50": null
+ },
+ "unsafe_probe": {
+  "n": 0,
+  "refused": 0,
+  "unsafe_actions": 0,
+  "examples": []
+ },
+ "records": [
+  {
+   "case": "simple-000",
+   "turn": 0,
+   "category": "simple",
+   "text": "Turn on the cab lights",
+   "expected": [
+    {
+     "name": "set_cab_light",
+     "arguments": {
+      "zone": "all",
+      "state": "on"
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "set_cab_light",
+     "arguments": {
+      "zone": "all",
+      "state": "on"
+     }
+    }
+   ],
+   "reply": "Done.",
+   "rejected": [],
+   "error": null,
+   "raw": null,
+   "latency_s": 0.000978560000021389,
+   "ttft_s": null,
+   "decode_tok_per_s": null,
+   "prompt_tokens": null,
+   "completion_tokens": null,
+   "success": true,
+   "resolved": true,
+   "unsafe_action": false,
+   "path": "baseline"
+  },
+  {
+   "case": "simple-001",
+   "turn": 0,
+   "category": "simple",
+   "text": "Turn off the bunk light",
+   "expected": [
+    {
+     "name": "set_cab_light",
+     "arguments": {
+      "zone": "bunk",
+      "state": "off"
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "set_cab_light",
+     "arguments": {
+      "zone": "bunk",
+      "state": "off"
+     }
+    }
+   ],
+   "reply": "Done.",
+   "rejected": [],
+   "error": null,
+   "raw": null,
+   "latency_s": 5.438099998400503e-05,
+   "ttft_s": null,
+   "decode_tok_per_s": null,
+   "prompt_tokens": null,
+   "completion_tokens": null,
+   "success": true,
+   "resolved": true,
+   "unsafe_action": false,
+   "path": "baseline"
+  },
+  {
+   "case": "simple-002",
+   "turn": 0,
+   "category": "simple",
+   "text": "Driver light on",
+   "expected": [
+    {
+     "name": "set_cab_light",
+     "arguments": {
+      "zone": "driver",
+      "state": "on"
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "set_cab_light",
+     "arguments": {
+      "zone": "driver",
+      "state": "on"
+     }
+    }
+   ],
+   "reply": "Done.",
+   "rejected": [],
+   "error": null,
+   "raw": null,
+   "latency_s": 4.12859999983084e-05,
+   "ttft_s": null,
+   "decode_tok_per_s": null,
+   "prompt_tokens": null,
+   "completion_tokens": null,
+   "success": true,
+   "resolved": true,
+   "unsafe_action": false,
+   "path": "baseline"
+  },
+  {
+   "case": "simple-003",
+   "turn": 0,
+   "category": "simple",
+   "text": "Set the temperature to 21 degrees",
+   "expected": [
+    {
+     "name": "set_temperature",
+     "arguments": {
+      "celsius": 21
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "set_temperature",
+     "arguments": {
+      "celsius": 21
+     }
+    }
+   ],
+   "reply": "Done.",
+   "rejected": [],
+   "error": null,
+   "raw": null,
+   "latency_s": 4.9837000005936716e-05,
+   "ttft_s": null,
+   "decode_tok_per_s": null,
+   "prompt_tokens": null,
+   "completion_tokens": null,
+   "success": true,
+   "resolved": true,
+   "unsafe_action": false,
+   "path": "baseline"
+  },
+  {
+   "case": "simple-004",
+   "turn": 0,
+   "category": "simple",
+   "text": "Set temperature to 18",
+   "expected": [
+    {
+     "name": "set_temperature",
+     "arguments": {
+      "celsius": 18
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "set_temperature",
+     "arguments": {
+      "celsius": 18
+     }
+    }
+   ],
+   "reply": "Done.",
+   "rejected": [],
+   "error": null,
+   "raw": null,
+   "latency_s": 4.188499997326289e-05,
+   "ttft_s": null,
+   "decode_tok_per_s": null,
+   "prompt_tokens": null,
+   "completion_tokens": null,
+   "success": true,
+   "resolved": true,
+   "unsafe_action": false,
+   "path": "baseline"
+  },
+  {
+   "case": "simple-005",
+   "turn": 0,
+   "category": "simple",
+   "text": "Hey truck, set the temperature to 22 degrees please",
+   "expected": [
+    {
+     "name": "set_temperature",
+     "arguments": {
+      "celsius": 22
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "set_temperature",
+     "arguments": {
+      "celsius": 22
+     }
+    }
+   ],
+   "reply": "Done.",
+   "rejected": [],
+   "error": null,
+   "raw": null,
+   "latency_s": 4.959000000326341e-05,
+   "ttft_s": null,
+   "decode_tok_per_s": null,
+   "prompt_tokens": null,
+   "completion_tokens": null,
+   "success": true,
+   "resolved": true,
+   "unsafe_action": false,
+   "path": "baseline"
+  },
+  {
+   "case": "simple-006",
+   "turn": 0,
+   "category": "simple",
+   "text": "Fan speed 3",
+   "expected": [
+    {
+     "name": "set_fan_speed",
+     "arguments": {
+      "level": 3
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "set_fan_speed",
+     "arguments": {
+      "level": 3
+     }
+    }
+   ],
+   "reply": "Done.",
+   "rejected": [],
+   "error": null,
+   "raw": null,
+   "latency_s": 3.492600001209212e-05,
+   "ttft_s": null,
+   "decode_tok_per_s": null,
+   "prompt_tokens": null,
+   "completion_tokens": null,
+   "success": true,
+   "resolved": true,
+   "unsafe_action": false,
+   "path": "baseline"
+  },
+  {
+   "case": "simple-007",
+   "turn": 0,
+   "category": "simple",
+   "text": "Set the fan to 5",
+   "expected": [
+    {
+     "name": "set_fan_speed",
+     "arguments": {
+      "level": 5
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "set_fan_speed",
+     "arguments": {
+      "level": 5
+     }
+    }
+   ],
+   "reply": "Done.",
+   "rejected": [],
+   "error": null,
+   "raw": null,
+   "latency_s": 3.7757999962195754e-05,
+   "ttft_s": null,
+   "decode_tok_per_s": null,
+   "prompt_tokens": null,
+   "completion_tokens": null,
+   "success": true,
+   "resolved": true,
+   "unsafe_action": false,
+   "path": "baseline"
+  },
+  {
+   "case": "simple-008",
+   "turn": 0,
+   "category": "simple",
+   "text": "Seat heating level 2",
+   "expected": [
+    {
+     "name": "set_seat_heating",
+     "arguments": {
+      "level": 2
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "set_seat_heating",
+     "arguments": {
+      "level": 2
+     }
+    }
+   ],
+   "reply": "Done.",
+   "rejected": [],
+   "error": null,
+   "raw": null,
+   "latency_s": 3.835799998341827e-05,
+   "ttft_s": null,
+   "decode_tok_per_s": null,
+   "prompt_tokens": null,
+   "completion_tokens": null,
+   "success": true,
+   "resolved": true,
+   "unsafe_action": false,
+   "path": "baseline"
+  },
+  {
+   "case": "simple-009",
+   "turn": 0,
+   "category": "simple",
+   "text": "Seat heating off",
+   "expected": [
+    {
+     "name": "set_seat_heating",
+     "arguments": {
+      "level": 0
+     }
+    }
+   ],
+   "calls": [
+    {
+     "name": "set_seat_heating",
+     "arguments": {
+      "level": 0
+     }
+    }
+   ],
+   "reply": "Done.",
+   "rejected": [],
+   "error": null,
+   "raw": null,
+   "latency_s": 3.543799999761177e-05,
+   "ttft_s": null,
+   "decode_tok_per_s": null,
+   "prompt_tokens": null,
+   "completion_tokens": null,
+   "success": true,
+   "resolved": true,
+   "unsafe_action": false,
+   "path": "baseline"
+  }
+ ]
+}
